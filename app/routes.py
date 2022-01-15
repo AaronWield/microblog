@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from app import app
 from app.forms import LoginForm
 from app.models import User
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 
 @app.route('/')
 @app.route('/index')
@@ -21,6 +21,9 @@ def index():
     return render_template('index.html', title='Home', user=user, posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
